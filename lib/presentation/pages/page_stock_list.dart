@@ -5,6 +5,7 @@ import 'package:stock_tracking_app/domain/bloc/list/stock_list_bloc.dart';
 import 'package:stock_tracking_app/presentation/pages/stock_list_item.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/my_app_bar.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/text_styles.dart';
+import 'package:synchronized/synchronized.dart';
 
 class PageStockList extends StatefulWidget {
   const PageStockList({super.key});
@@ -22,6 +23,7 @@ class _PageStockListState extends State<PageStockList> {
 
   @override
   Widget build(BuildContext context) {
+    final Lock lock = Lock();
     return Scaffold(
       appBar: getDefaultAppBar(context, AppStrings.appTitle),
       body: BlocBuilder<StockListBloc, StockListState>(
@@ -35,7 +37,11 @@ class _PageStockListState extends State<PageStockList> {
               itemCount: state.list.length,
               padding: const EdgeInsets.only(left: 8, right: 8),
               itemBuilder: (context, index) {
-                return StockListItem(itemData: state.list[index]);
+                print("Item Shown = ${state.list[index].symbol}");
+                return StockListItem(
+                  itemData: state.list[index],
+                  lock: lock,
+                );
               },
             );
           } else if (state is StockListErrorState) {

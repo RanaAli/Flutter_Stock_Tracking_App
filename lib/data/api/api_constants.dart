@@ -6,6 +6,12 @@ class ApiConstants {
 
   static const timeout = 60;
 
-  static const forexSymbols =
+  static const getForexSymbols =
       "$_baseUrl/api/v1/forex/symbol?exchange=oanda&token=$_api_token";
+
+  static const getCryptoSymbols =
+      "$_baseUrl/api/v1/crypto/symbol?exchange=binance&token=$_api_token";
+
+  static const getQuotes =
+      "$_baseUrl/api/v1/quote?token=$_api_token";
 }

@@ -1,17 +1,52 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:stock_tracking_app/domain/entities/forex_stock_entity.dart';
+import 'package:stock_tracking_app/data/api/api_service.dart';
+import 'package:stock_tracking_app/domain/entities/forex_stocks/forex_stock_entity.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/text_styles.dart';
+import 'package:synchronized/synchronized.dart';
 
 class StockListItem extends StatefulWidget {
   final ForexStockEntity itemData;
+  final Lock lock;
 
-  const StockListItem({super.key, required this.itemData});
+  StockListItem({super.key, required this.itemData, required this.lock});
 
   @override
   State<StatefulWidget> createState() => _StockListItemState();
 }
 
 class _StockListItemState extends State<StockListItem> {
+  String? _quote;
+
+  @override
+  void initState() {
+    super.initState();
+    getQuote();
+  }
+
+  void getQuote() async {
+    if (_quote == null) {
+      await widget.lock.synchronized(
+        () async {
+          var op = Timer(
+            const Duration(seconds: 3),
+            () async {
+              var quotesResponse = await ApiServiceImpl.getService()
+                  .getQuotes(widget.itemData.symbol.toString());
+              setState(() {
+                _quote = quotesResponse.currentPrice;
+              });
+            },
+          );
+
+          if (!mounted) op.cancel();
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -41,6 +76,11 @@ class _StockListItemState extends State<StockListItem> {
               ],
             ),
             const SizedBox(width: 16),
+            if (_quote != null)
+              Text(
+                _quote.toString(),
+                style: textStyleNormalBoldBlue,
+              )
           ],
         ),
       ),

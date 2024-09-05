@@ -3,8 +3,8 @@ targets:
     builders:
       source_gen|combining_builder:
         generate_for:
-          - lib/data/models/**.dart
-          - lib/domain/entities/**.dart
+          - lib/data/models/**/**.dart
+          - lib/domain/entities/**/**.dart
         options:
           build_extensions:
             # I want this line to "work":
