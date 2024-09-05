@@ -5,9 +5,10 @@ part 'generated/forex_stock_response.g.dart';
 
 @JsonSerializable()
 class ForexStockResponse {
-  late String? description;
-  late String? displaySymbol;
-  late String? symbol;
+  String? description;
+  @JsonKey(name: 'displaySymbol')
+  String? displaySymbol;
+  String? symbol;
 
   ForexStockResponse();
 

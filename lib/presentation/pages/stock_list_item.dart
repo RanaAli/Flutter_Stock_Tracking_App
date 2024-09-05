@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_tracking_app/data/models/forex_stock_response.dart';
+import 'package:stock_tracking_app/domain/entities/forex_stock_entity.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/text_styles.dart';
 
 class StockListItem extends StatefulWidget {
-  final ForexStockResponse itemData;
+  final ForexStockEntity itemData;
 
   const StockListItem({super.key, required this.itemData});
 
@@ -34,7 +33,8 @@ class _StockListItemState extends State<StockListItem> {
                   textAlign: TextAlign.start,
                 ),
                 const SizedBox(height: 8),
-                Text(widget.itemData.description.toString().trim(),
+                Text(
+                  widget.itemData.description.toString().trim(),
                   style: textStyleSmallGrey,
                   textAlign: TextAlign.start,
                 ),
