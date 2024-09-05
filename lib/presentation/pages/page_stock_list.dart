@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_tracking_app/app_strings.dart';
 import 'package:stock_tracking_app/domain/bloc/list/stock_list_bloc.dart';
 import 'package:stock_tracking_app/presentation/pages/stock_list_item.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/my_app_bar.dart';
@@ -22,13 +23,12 @@ class _PageStockListState extends State<PageStockList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getDefaultAppBar(context, "Title"),
+      appBar: getDefaultAppBar(context, AppStrings.appTitle),
       body: BlocBuilder<StockListBloc, StockListState>(
         builder: (context, state) {
           if (state is StockListLoadingState) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (state is StockListSuccessState) {
-            print("in success, StateList = ${state.list.length}");
             return ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -39,13 +39,13 @@ class _PageStockListState extends State<PageStockList> {
               },
             );
           } else if (state is StockListErrorState) {
-            print("in error");
-            return Text("error");
+            return const Center(child: Text(AppStrings.error));
           } else {
-            print("in else");
-            return const Text(
-              'Downloading stock info...',
-              style: textStyleNormalBoldBlack,
+            return const Center(
+              child: Text(
+                AppStrings.downloadingStocks,
+                style: textStyleNormalBoldBlack,
+              ),
             );
           }
         },
