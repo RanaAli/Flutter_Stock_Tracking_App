@@ -17,25 +17,25 @@ class _StockListItemState extends State<StockListItem> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               widget.itemData.displaySymbol.toString(),
-              style: textStyleSmallGrey,
+              style: textStyleNormalBoldBlue,
             ),
             const SizedBox(width: 16),
             Column(
               children: [
                 Text(
                   widget.itemData.symbol.toString().trim(),
-                  style: textStyleNormalBoldBlue,
+                  style: textStyleSmallBlack,
                   textAlign: TextAlign.start,
                 ),
                 const SizedBox(height: 8),
                 Text(widget.itemData.description.toString().trim(),
-                  style: textStyleSmallBlack,
+                  style: textStyleSmallGrey,
                   textAlign: TextAlign.start,
                 ),
               ],

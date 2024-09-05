@@ -24,8 +24,11 @@ class _PageStockListState extends State<PageStockList> {
         itemCount: _data.length,
         padding: const EdgeInsets.only(left: 8, right: 8),
         itemBuilder: (context, index) {
-          final item = _data[index];
-          return StockListItem(itemData: item);
+          if (_isLoading) {
+            return const CircularProgressIndicator();
+          } else {
+            return StockListItem(itemData: _data[index]);
+          }
         },
       ),
     );
