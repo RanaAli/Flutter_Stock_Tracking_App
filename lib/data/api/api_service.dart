@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:stock_tracking_app/data/ApiConstants.dart';
+import 'package:stock_tracking_app/data/api/api_constants.dart';
 import 'package:stock_tracking_app/data/infrastructure/http_infra.dart';
 import 'package:stock_tracking_app/data/models/forex_stock_response.dart';
 

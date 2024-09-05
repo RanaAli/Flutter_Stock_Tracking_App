@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_tracking_app/data/api_service.dart';
 import 'package:stock_tracking_app/presentation/pages/page_stock_list.dart';
 
 void main() {

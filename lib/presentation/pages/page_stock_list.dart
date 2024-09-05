@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stock_tracking_app/data/api_service.dart';
+import 'package:stock_tracking_app/data/api/api_service.dart';
 import 'package:stock_tracking_app/data/models/forex_stock_response.dart';
 import 'package:stock_tracking_app/presentation/pages/stock_list_item.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/my_app_bar.dart';
