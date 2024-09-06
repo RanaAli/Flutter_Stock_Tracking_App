@@ -19,7 +19,7 @@ class TradeBloc extends Bloc<TraderEvent, TradeState> {
       );
       emit(const TradeLoadingState(null));
       try {
-        channel.sink.add('{"type":"subscribe","symbol":"BINANCE:BTCUSDT"}');
+        channel.sink.add('{"type":"subscribe","symbol":"${event.symbol}"}');
         emitStateLoaded();
       } catch (e) {
         rethrow;

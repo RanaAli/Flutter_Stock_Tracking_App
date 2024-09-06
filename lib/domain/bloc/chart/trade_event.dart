@@ -5,11 +5,19 @@ abstract class TraderEvent extends Equatable {
 }
 
 class TraderOpenChannelEvent extends TraderEvent {
+  final String symbol;
+
+  const TraderOpenChannelEvent({required this.symbol});
+
   @override
   List<Object?> get props => [];
 }
 
 class TradeCloseChannelEvent extends TraderEvent {
+  final String symbol;
+
+  const TradeCloseChannelEvent({required this.symbol});
+
   @override
   List<Object?> get props => [];
 }

@@ -41,7 +41,7 @@ class _PageStockListState extends State<PageStockList> {
                 print("Item Shown = ${state.list[index].symbol}");
                 return GestureDetector(
                   onTap: () {
-                    navigateToChartScreen(context);
+                    navigateToChartScreen(context, state.list[index]);
                   },
                   child: StockListItem(
                     itemData: state.list[index],
