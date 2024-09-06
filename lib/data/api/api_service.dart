@@ -37,10 +37,7 @@ class ApiServiceImpl implements ApiService {
   @override
   Future<QuotesResponse> getQuotes(String symbol) async {
     Response response = await dio
-        .get(
-          ApiConstants.getQuotes + "&symbol=$symbol",
-          // queryParameters: {'symbol': "$symbol"},
-        )
+        .get(ApiConstants.getQuotes + "&symbol=$symbol")
         .timeout(timeOut);
 
     print("quote data = " + response.data.toString());
