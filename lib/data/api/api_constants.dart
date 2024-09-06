@@ -12,6 +12,7 @@ class ApiConstants {
   static const getCryptoSymbols =
       "$_baseUrl/api/v1/crypto/symbol?exchange=binance&token=$_api_token";
 
-  static const getQuotes =
-      "$_baseUrl/api/v1/quote?token=$_api_token";
+  static const getQuotes = "$_baseUrl/api/v1/quote?token=$_api_token";
+
+  static const webSocketApi = "wss://ws.finnhub.io?token=$_api_token";
 }

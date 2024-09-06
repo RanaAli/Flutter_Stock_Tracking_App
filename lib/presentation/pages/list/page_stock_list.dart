@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_tracking_app/app_strings.dart';
 import 'package:stock_tracking_app/domain/bloc/list/stock_list_bloc.dart';
+import 'package:stock_tracking_app/navigation/router.dart';
 import 'package:stock_tracking_app/presentation/pages/list/stock_list_item.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/my_app_bar.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/text_styles.dart';
@@ -38,9 +39,14 @@ class _PageStockListState extends State<PageStockList> {
               padding: const EdgeInsets.only(left: 8, right: 8),
               itemBuilder: (context, index) {
                 print("Item Shown = ${state.list[index].symbol}");
-                return StockListItem(
-                  itemData: state.list[index],
-                  lock: lock,
+                return GestureDetector(
+                  onTap: () {
+                    navigateToChartScreen(context);
+                  },
+                  child: StockListItem(
+                    itemData: state.list[index],
+                    lock: lock,
+                  ),
                 );
               },
             );

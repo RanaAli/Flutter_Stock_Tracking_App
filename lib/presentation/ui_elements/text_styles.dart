@@ -14,6 +14,12 @@ const textStyleSmallGrey = TextStyle(
   fontSize: 12,
 );
 
+const textStyleTinyGrey = TextStyle(
+  color: Colors.grey,
+  fontWeight: FontWeight.normal,
+  fontSize: 10,
+);
+
 const textStyleWhite = TextStyle(
   fontWeight: FontWeight.normal,
   fontSize: 12,
