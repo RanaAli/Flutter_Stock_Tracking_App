@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_tracking_app/app_strings.dart';
 import 'package:stock_tracking_app/domain/bloc/list/stock_list_bloc.dart';
-import 'package:stock_tracking_app/presentation/pages/stock_list_item.dart';
+import 'package:stock_tracking_app/presentation/pages/list/stock_list_item.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/my_app_bar.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/text_styles.dart';
 import 'package:synchronized/synchronized.dart';

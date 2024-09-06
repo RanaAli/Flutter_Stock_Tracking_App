@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_tracking_app/app_strings.dart';
-import 'package:stock_tracking_app/presentation/pages/page_stock_list.dart';
+import 'package:stock_tracking_app/presentation/pages/list/page_stock_list.dart';
 import 'package:stock_tracking_app/domain/bloc/app_bloc_provider.dart';
 
 void main() {
