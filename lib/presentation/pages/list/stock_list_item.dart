@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:stock_tracking_app/data/api/api_service.dart';
+import 'package:stock_tracking_app/data/datasource/remote/stocks_datastore.dart';
+import 'package:stock_tracking_app/data/repositories/stock_repository_impl.dart';
 import 'package:stock_tracking_app/domain/entities/forex_stocks/forex_stock_entity.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/text_styles.dart';
 import 'package:synchronized/synchronized.dart';
@@ -36,16 +38,13 @@ class _StockListItemState extends State<StockListItem> {
     if (_quote == null) {
       await widget.lock.synchronized(
         () async {
-          _operation = Timer(
-            const Duration(seconds: 5),
-            () async {
-              var quotesResponse = await ApiServiceImpl.getService()
-                  .getQuotes(widget.itemData.symbol.toString());
-              setState(() {
-                _quote = quotesResponse.currentPrice;
-              });
-            },
-          );
+          _operation = Timer(const Duration(seconds: 5), () async {
+            var quotesResponse = await getStockRepository()
+                .getQuotes(widget.itemData.symbol.toString());
+            setState(() {
+              _quote = quotesResponse.currentPrice;
+            });
+          });
 
           if (!mounted) _operation?.cancel();
         },
@@ -53,35 +52,22 @@ class _StockListItemState extends State<StockListItem> {
     }
   }
 
+  StockRepositoryImpl getStockRepository() {
+    return StockRepositoryImpl(
+        datastore: StocksDatastoreImpl(service: ApiServiceImpl.getService()));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final displaySymbol = widget.itemData.displaySymbol.toString();
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.itemData.displaySymbol.toString(),
-              style: textStyleNormalBoldBlue,
-            ),
+            Text(displaySymbol, style: textStyleNormalBoldBlue),
             const SizedBox(width: 16),
-            // Column(
-            //   children: [
-            //     Text(
-            //       widget.itemData.symbol.toString().trim(),
-            //       style: textStyleSmallBlack,
-            //       textAlign: TextAlign.start,
-            //     ),
-            //     const SizedBox(height: 8),
-            //     Text(
-            //       widget.itemData.description.toString().trim(),
-            //       style: textStyleSmallGrey,
-            //       textAlign: TextAlign.start,
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(width: 16),
             if (_quote == null)
               const SizedBox(
                 height: 12,
@@ -89,10 +75,7 @@ class _StockListItemState extends State<StockListItem> {
                 child: CircularProgressIndicator(strokeWidth: 1),
               )
             else
-              Text(
-                _quote.toString(),
-                style: textStyleNormalBlack,
-              )
+              Text(_quote.toString(), style: textStyleNormalBlack)
           ],
         ),
       ),
