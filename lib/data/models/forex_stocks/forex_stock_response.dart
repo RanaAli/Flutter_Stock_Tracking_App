@@ -10,7 +10,7 @@ class ForexStockResponse {
   String? displaySymbol;
   String? symbol;
 
-  ForexStockResponse();
+  ForexStockResponse({this.description, this.displaySymbol, this.symbol});
 
   factory ForexStockResponse.fromJson(Map<String, dynamic> json) =>
       _$ForexStockResponseFromJson(json);

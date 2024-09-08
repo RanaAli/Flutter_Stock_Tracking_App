@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
 part 'generated/forex_stock_entity.g.dart';
 
 @JsonSerializable()
-class ForexStockEntity {
+class ForexStockEntity extends Equatable {
   String? description;
   @JsonKey(name: 'displaySymbol')
   String? displaySymbol;
@@ -21,4 +22,7 @@ class ForexStockEntity {
   String toString() {
     return jsonEncode(this);
   }
+
+  @override
+  List<Object?> get props => [];
 }
