@@ -1,6 +1,7 @@
+import 'package:stock_tracking_app/env/env.dart';
+
 class ApiConstants {
-  static const _api_token =
-      "crcnn89r01qkg1le7680crcnn89r01qkg1le768g"; // this should be in git as a variable.
+  static const _api_token = Env.key;
 
   static const _baseUrl = 'https://finnhub.io';
 

@@ -5,16 +5,17 @@ targets:
         generate_for:
           - lib/data/models/**/**.dart
           - lib/domain/entities/**/**.dart
+          - lib/env/**.dart
         options:
           build_extensions:
-            # I want this line to "work":
-            # '^lib/**/{{}}.dart': 'lib/generated/model/{{}}.g.dart'
+            'lib/{{path}}/{{file}}.dart': 'lib/{{path}}/generated/{{file}}.g.dart'
+      envied_generator|envied:
+        options:
+          build_extensions:
             'lib/{{path}}/{{file}}.dart': 'lib/{{path}}/generated/{{file}}.g.dart'
       freezed:
         options:
           build_extensions:
-            # I want this line to "work":
-            # '^lib/**/{{}}.dart': 'lib/generated/model/{{}}.freezed.dart'
             'lib/{{path}}/{{file}}.dart': 'lib/{{path}}/generated/{{file}}.freezed.dart'
           field_rename: snake
           explicit_to_json: true

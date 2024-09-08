@@ -5,6 +5,7 @@ import 'package:stock_tracking_app/data/api/api_constants.dart';
 import 'package:stock_tracking_app/data/infrastructure/http_infra.dart';
 import 'package:stock_tracking_app/data/models/forex_stocks/forex_stock_response.dart';
 import 'package:stock_tracking_app/data/models/quotes/quotes_response.dart';
+import 'package:stock_tracking_app/env/env.dart';
 
 abstract class ApiService {
   Future<List<ForexStockResponse>> getForexStocks();
@@ -26,6 +27,8 @@ class ApiServiceImpl implements ApiService {
 
   @override
   Future<List<ForexStockResponse>> getForexStocks() async {
+    print("env =" + Env.key);
+
     Response response =
         await dio.get(ApiConstants.getCryptoSymbols).timeout(timeOut);
 
