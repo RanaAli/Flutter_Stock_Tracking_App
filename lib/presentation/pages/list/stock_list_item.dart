@@ -35,21 +35,21 @@ class _StockListItemState extends State<StockListItem> {
   }
 
   void getQuote() async {
-    if (_quote == null) {
-      await widget.lock.synchronized(
-        () async {
-          _operation = Timer(const Duration(seconds: 5), () async {
-            var quotesResponse = await getStockRepository()
-                .getQuotes(widget.itemData.symbol.toString());
-            setState(() {
-              _quote = quotesResponse.currentPrice;
-            });
+    // if (_quote == null) {
+    await widget.lock.synchronized(
+      () async {
+        _operation = Timer(const Duration(seconds: 5), () async {
+          var quotesResponse = await getStockRepository()
+              .getQuotes(widget.itemData.symbol.toString());
+          setState(() {
+            _quote = quotesResponse.currentPrice;
           });
+        });
 
-          if (!mounted) _operation?.cancel();
-        },
-      );
-    }
+        if (!mounted) _operation?.cancel();
+      },
+    );
+    // }
   }
 
   StockRepositoryImpl getStockRepository() {
@@ -61,12 +61,13 @@ class _StockListItemState extends State<StockListItem> {
   Widget build(BuildContext context) {
     final displaySymbol = widget.itemData.displaySymbol.toString();
     return Card(
+      elevation: 0.1,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(32.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(displaySymbol, style: textStyleNormalBoldBlue),
+            Text(displaySymbol, style: textStyleLargeBoldBlue),
             const SizedBox(width: 16),
             if (_quote == null)
               const SizedBox(

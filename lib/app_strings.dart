@@ -5,4 +5,6 @@ class AppStrings {
 
   static const waitingForData = 'Waiting for new trade events...';
   static const liveTrade = 'Live Trade';
+
+  static const searchLabel = 'Search Stock';
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 
+var textStyleLargeBoldBlue = TextStyle(
+  color: Colors.indigo.shade400,
+  fontWeight: FontWeight.bold,
+  fontSize: 20,
+);
 
 var textStyleNormalBoldBlue = TextStyle(
   color: Colors.indigo.shade400,

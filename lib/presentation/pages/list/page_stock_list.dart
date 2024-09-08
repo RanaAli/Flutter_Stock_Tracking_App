@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_tracking_app/app_strings.dart';
 import 'package:stock_tracking_app/domain/bloc/list/stock_list_bloc.dart';
+import 'package:stock_tracking_app/domain/entities/forex_stocks/forex_stock_entity.dart';
 import 'package:stock_tracking_app/navigation/router.dart';
 import 'package:stock_tracking_app/presentation/pages/list/stock_list_item.dart';
 import 'package:stock_tracking_app/presentation/ui_elements/my_app_bar.dart';
@@ -16,10 +17,22 @@ class PageStockList extends StatefulWidget {
 }
 
 class _PageStockListState extends State<PageStockList> {
+  List<ForexStockEntity> searchList = [];
+  List<ForexStockEntity> list = [];
+
+  late TextEditingController _searchTextFieldController;
+
   @override
   void initState() {
     context.read<StockListBloc>().add(GetStockListEvent());
     super.initState();
+    _searchTextFieldController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchTextFieldController.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,23 +45,33 @@ class _PageStockListState extends State<PageStockList> {
           if (state is StockListLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is StockListSuccessState) {
-            return ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: state.list.length,
-              padding: const EdgeInsets.only(left: 8, right: 8),
-              itemBuilder: (context, index) {
-                print("Item Shown = ${state.list[index].symbol}");
-                return GestureDetector(
-                  onTap: () {
-                    navigateToChartScreen(context, state.list[index]);
-                  },
-                  child: StockListItem(
-                    itemData: state.list[index],
-                    lock: lock,
+            list = state.list;
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _searchTextFieldController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      ),
+                      labelText: AppStrings.searchLabel,
+                      labelStyle: textStyleSmallGrey,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchList = list
+                            .where((item) => listSearchValidation(item, value))
+                            .toList();
+                      });
+                    },
                   ),
-                );
-              },
+                ),
+                searchList.isEmpty
+                    ? defaultListView(list, lock)
+                    : defaultListView(searchList, lock),
+              ],
             );
           } else if (state is StockListErrorState) {
             return const Center(child: Text(AppStrings.error));
@@ -63,5 +86,29 @@ class _PageStockListState extends State<PageStockList> {
         },
       ),
     );
+  }
+
+  Expanded defaultListView(List<ForexStockEntity> list, Lock lock) {
+    return Expanded(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: list.length,
+        padding: const EdgeInsets.only(left: 8, right: 8),
+        itemBuilder: (context, index) {
+          final itemData = list[index];
+          return GestureDetector(
+            onTap: () {
+              navigateToChartScreen(context, itemData);
+            },
+            child: StockListItem(itemData: itemData, lock: lock),
+          );
+        },
+      ),
+    );
+  }
+
+  bool listSearchValidation(ForexStockEntity item, String value) {
+    return item.symbol.toString().toLowerCase().contains(value.toLowerCase());
   }
 }
