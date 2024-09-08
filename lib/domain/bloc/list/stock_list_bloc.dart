@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:stock_tracking_app/data/api/api_service.dart';
 import 'package:stock_tracking_app/data/datasource/remote/stocks_datastore.dart';
 import 'package:stock_tracking_app/data/repositories/stock_repository_impl.dart';
@@ -7,6 +8,7 @@ import 'package:stock_tracking_app/domain/entities/forex_stocks/forex_stock_enti
 import 'package:stock_tracking_app/domain/repositories/stock_repository.dart';
 
 part 'stock_list_event.dart';
+
 part 'stock_list_state.dart';
 
 class StockListBloc extends Bloc<StockListEvent, StockListState> {
@@ -15,12 +17,18 @@ class StockListBloc extends Bloc<StockListEvent, StockListState> {
 
   StockListBloc() : super(StockListInitialState()) {
     on<StockListEvent>((event, emit) async {
-      emit(StockListLoadingState());
-      final list = await repo.getForexStocks();
-      if (list != null) {
-        emit(StockListSuccessState(list: list));
-      } else {
-        emit(StockListErrorState());
+
+      bool result = await InternetConnection().hasInternetAccess;
+      if (result) {
+        emit(StockListLoadingState());
+        final list = await repo.getForexStocks();
+        if (list != null) {
+          emit(StockListSuccessState(list: list));
+        } else {
+          emit(StockListErrorState());
+        }
+      }else {
+        emit(StockListNetworkErrorState());
       }
     });
   }

@@ -44,7 +44,7 @@ class _PageTradeChartState extends State<PageTradeChart> {
                 ),
                 const SizedBox(height: 32),
                 BlocBuilder<TradeBloc, TradeState>(builder: (context, state) {
-                  if (state is TradeLoadedState) {
+                  if (state is TradeSuccessState) {
                     stockValueList.add(state.data.p);
                     return Column(
                       mainAxisSize: MainAxisSize.max,

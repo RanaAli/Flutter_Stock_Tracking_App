@@ -73,8 +73,12 @@ class _PageStockListState extends State<PageStockList> {
                     : defaultListView(searchList, lock),
               ],
             );
+          } else if (state is StockListNetworkErrorState) {
+            return const Center(
+                child: Text(AppStrings.networkError, style: textStyleError));
           } else if (state is StockListErrorState) {
-            return const Center(child: Text(AppStrings.error));
+            return const Center(
+                child: Text(AppStrings.error, style: textStyleError));
           } else {
             return const Center(
               child: Text(

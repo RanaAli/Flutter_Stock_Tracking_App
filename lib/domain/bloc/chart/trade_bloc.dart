@@ -20,7 +20,7 @@ class TradeBloc extends Bloc<TraderEvent, TradeState> {
       emit(const TradeLoadingState(null));
       try {
         channel.sink.add('{"type":"subscribe","symbol":"${event.symbol}"}');
-        emitStateLoaded();
+        emitStateSuccess();
       } catch (e) {
         rethrow;
       }
@@ -30,12 +30,12 @@ class TradeBloc extends Bloc<TraderEvent, TradeState> {
     });
   }
 
-  void emitStateLoaded() {
+  void emitStateSuccess() {
     channel.stream.listen((stream) async {
       print(stream.toString() + "\n");
       final trade =
           TradeModelList.fromJson(jsonDecode(stream) as Map<String, dynamic>);
-      emit(TradeLoadedState(data: trade.data.first));
+      emit(TradeSuccessState(data: trade.data.first));
     });
   }
 }

@@ -18,13 +18,13 @@ class TradeLoadingState extends TradeState {
   List<Object?> get props => [data];
 }
 
-class TradeFailureState extends TradeState {
+class TradeErrorState extends TradeState {
   @override
   List<Object?> get props => [];
 }
 
-class TradeLoadedState extends TradeState {
-  const TradeLoadedState({required this.data});
+class TradeSuccessState extends TradeState {
+  const TradeSuccessState({required this.data});
 
   final TradeModel data;
 

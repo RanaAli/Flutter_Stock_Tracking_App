@@ -19,6 +19,11 @@ class StockListErrorState extends StockListState {
   List<Object> get props => [];
 }
 
+class StockListNetworkErrorState extends StockListState {
+  @override
+  List<Object> get props => [];
+}
+
 class StockListSuccessState extends StockListState {
   final List<ForexStockEntity> list;
 
