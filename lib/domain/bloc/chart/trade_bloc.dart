@@ -41,13 +41,13 @@ class TradeBloc extends Bloc<TraderEvent, TradeState> {
 
         bool result = await InternetConnection().hasInternetAccess;
 
-        if (result)
+        if (result) {
           emit(TradeSuccessState(data: trade.data.first));
-        else
+        } else {
           emit(TradeNetworkErrorState());
+        }
       },
       onError: (error) => emit(TradeNetworkErrorState()),
-
     );
   }
 }
