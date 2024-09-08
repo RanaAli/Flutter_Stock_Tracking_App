@@ -23,6 +23,11 @@ class TradeErrorState extends TradeState {
   List<Object?> get props => [];
 }
 
+class TradeNetworkErrorState extends TradeState {
+  @override
+  List<Object?> get props => [];
+}
+
 class TradeSuccessState extends TradeState {
   const TradeSuccessState({required this.data});
 

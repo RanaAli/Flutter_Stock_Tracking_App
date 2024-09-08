@@ -84,8 +84,14 @@ class _PageTradeChartState extends State<PageTradeChart> {
                         ),
                       ],
                     );
+                  }else if(state is TradeErrorState){
+                    return const Text(AppStrings.error, style: textStyleError);
+                  }else if(state is TradeNetworkErrorState){
+                    return const Text(AppStrings.networkError, style: textStyleError);
+                  }else {
+                    return const Text(
+                        AppStrings.waitingForData, style: textStyleError);
                   }
-                  return const Text(AppStrings.waitingForData, style: textStyleError);
                 }),
               ],
             ),
