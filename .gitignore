@@ -44,3 +44,4 @@ app.*.map.json
 /*.lock
 /*.env
 /**/generated/*.g.dart
+*.cxx
